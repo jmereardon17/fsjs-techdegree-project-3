@@ -26,14 +26,14 @@ document.getElementById('bitcoin').style.display = 'none'; // Hide bitcoin field
 
 // --- Validation ---
 const validationSchema = {
-  checkName: name => /^[A-Za-z]{2,}$/.test(name),
+  checkName: name => name !== '',
   checkEmail: email => /^([a-zA-Z\-0-9.]+)@([a-zA-Z\-0-9]+).com$/.test(email),
   checkActivities: () => activities.querySelector('[type="checkbox"]:checked') ? true : false,
   checkExpiryMonth: () => document.getElementById('exp-month').selectedIndex !== 0,
   checkExpiryYear: () => document.getElementById('exp-year').selectedIndex !== 0,
-  checkCCNum: () => document.getElementById('cc-num').value.length >= 13 && document.getElementById('cc-num').value.length <= 16,
-  checkZip: () => document.getElementById('zip').value.length >= 5 && document.getElementById('zip').value.length <= 5,
-  checkCVV: () => document.getElementById('cvv').value.length >= 3 && document.getElementById('cvv').value.length <= 3
+  checkCCNum: () => /^[0-9]{13}$|^[0-9]{16}$/.test(document.getElementById('cc-num').value),
+  checkZip: () => /^[0-9]{5}$/.test(document.getElementById('zip').value),
+  checkCVV: () => /^[0-9]{3}$/.test(document.getElementById('cvv').value),
 }
 
 const isValid = field => {
@@ -42,11 +42,11 @@ const isValid = field => {
   if (field.id === 'activities-box') return validationSchema.checkActivities();
   // If the credit card option is selected run the validation
   if (paymentField.selectedIndex === 1) {
-    if (field.id === 'exp-month') return validationSchema.checkExpiryMonth(field.value);
-    if (field.id === 'exp-year') return validationSchema.checkExpiryYear(field.value);
-    if (field.id === 'cc-num') return validationSchema.checkCCNum(field.value);
-    if (field.id === 'zip') return validationSchema.checkZip(field.value);
-    if (field.id === 'cvv') return validationSchema.checkCVV(field.value);
+    if (field.id === 'exp-month') return validationSchema.checkExpiryMonth();
+    if (field.id === 'exp-year') return validationSchema.checkExpiryYear();
+    if (field.id === 'cc-num') return validationSchema.checkCCNum();
+    if (field.id === 'zip') return validationSchema.checkZip();
+    if (field.id === 'cvv') return validationSchema.checkCVV();
     // otherwise, skip with setting validation to true
   } else {
     return true;
