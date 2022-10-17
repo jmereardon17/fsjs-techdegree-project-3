@@ -11,4 +11,4 @@ I also went for the Exceeds Expectations Grading where I had to:
 - Add real-time error message (added to all required fields)
 - Add Conditional error message (added to the Email field)
 
-Grade: TBC
+Grade: Exceeds Expectations
